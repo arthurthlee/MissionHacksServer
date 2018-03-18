@@ -39,7 +39,7 @@ var appRouter = function (app, droneFleet, warehouseLocations, stationLocations)
 
       var droneLocation = droneFleet.drones.filter(function(drone) {
         if (drone.order == null) {
-          res.status(200).json("PACKAGE ARRIVED");
+          res.status(200).json({ status: 'arrived' });
           orderExists = false;
           return;
         }
@@ -54,10 +54,10 @@ var appRouter = function (app, droneFleet, warehouseLocations, stationLocations)
       if (droneLocation.lat == orderInfo.lat
         && droneLocation.long == orderInfo.long
         && droneLocation.alt == orderInfo.alt) {
-      res.status(200).json("PACKAGE ARRIVED");
+      res.status(200).json({ status: 'arrived' });
         }
         else {
-      res.status(200).json(droneLocation);
+      res.status(200).json(Object.assign( droneLocation, { status: 'transit' } ) );
         }
     });
 
