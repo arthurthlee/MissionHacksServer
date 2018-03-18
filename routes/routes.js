@@ -63,7 +63,7 @@ var appRouter = function (app, droneFleet, warehouseLocations, stationLocations)
       }
 
       //console.log("Drone Location : " + JSON.stringify(droneLocation));
-      if (droneLocation.lat == orderInfo.lat
+      if (droneLocation && droneLocation.lat == orderInfo.lat
         && droneLocation.long == orderInfo.long
         && droneLocation.alt == orderInfo.alt) {
       res.status(200).json({ status: 'arrived' });
