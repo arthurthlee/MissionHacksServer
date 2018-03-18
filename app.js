@@ -44,8 +44,8 @@ function statusUpdate() {
 
 function createWarehouses() {
     var warehouseLocation = {
-        lat: randomIntFromInterval(latitudeLowerLimit, latitudeUpperLimit),
-        long: randomIntFromInterval(longitudeLowerLimit, longitudeUpperLimit),
+        lat: 49.168479,//randomIntFromInterval(latitudeLowerLimit, latitudeUpperLimit),
+        long: -122.911184,//randomIntFromInterval(longitudeLowerLimit, longitudeUpperLimit),
         alt: Math.round(Math.random()*20)
     };
     warehouseLocations.push(warehouseLocation);
