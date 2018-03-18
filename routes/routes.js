@@ -17,8 +17,8 @@ var appRouter = function (app, droneFleet, warehouseLocations, stationLocations)
         long: warehouseLocations[0].long
       };
       var userLocation = {
-        lat: req.query.lat,
-        long: req.query.long
+        lat: Number(req.query.lat),
+        long: Number(req.query.long)
       };
       var stationToWarehousePath = droneFleet.getPath(stationLocation, warehouseLocation);
       var warehouseToConsumerPath = droneFleet.getPath(warehouseLocation, userLocation);
@@ -51,13 +51,13 @@ var appRouter = function (app, droneFleet, warehouseLocations, stationLocations)
         return;
       }
 
-      if (droneFleet.drones[0].availability == "In Transit to Warehouse") {
+      if (droneFleet.drones[0].availability == "In Transit to Warehouse" && droneLocation) {
         droneLocation.timeLeft = droneFleet.getTimeLeft(droneLocation, warehouseLocations[0]);
         droneLocation.timeLeft += Math.abs(droneLocation.alt - warehouseLocations[0].alt);
         droneLocation.timeLeft += droneFleet.getTimeLeft(warehouseLocations[0],  droneFleet.drones[0].order);
         droneLocation.timeLeft += Math.abs(droneFleet.drones[0].order.alt - warehouseLocations[0].alt);
       }
-      else if (droneFleet.drones[0].availability == "In Transit to Consumer") {
+      else if (droneFleet.drones[0].availability == "In Transit to Consumer" && droneLocation) {
         droneLocation.timeLeft = droneFleet.getTimeLeft(droneLocation, droneFleet.drones[0].order);
         droneLocation.timeLeft += Math.abs(droneLocation.alt - droneFleet.drones[0].order.alt);
       }
@@ -76,10 +76,10 @@ var appRouter = function (app, droneFleet, warehouseLocations, stationLocations)
     app.post("/placeOrder", function (req, res) {
       var orderId = currentOrderId;
       var userOrder = ({
-          lat: req.body.lat,
-          long: req.body.long,
-          alt: req.body.alt,
-          userId: req.body.userId,
+          lat: parseFloat(req.body.lat),
+          long: parseFloat(req.body.long),
+          alt: parseFloat(req.body.alt),
+          userId: parseFloat(req.body.userId),
           userOrderId: orderId,
       });
 
