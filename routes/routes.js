@@ -1,5 +1,6 @@
 var userOrders = [];
 var currentOrderId = 0;
+var previousTime;
 
 var appRouter = function (app, droneFleet, warehouseLocations, stationLocations) {
     app.get("/", function(req, res) {
@@ -50,6 +51,17 @@ var appRouter = function (app, droneFleet, warehouseLocations, stationLocations)
         return;
       }
 
+      if (droneFleet.drones[0].availability == "In Transit to Warehouse") {
+        droneLocation.timeLeft = droneFleet.getTimeLeft(droneLocation, warehouseLocations[0]);
+        droneLocation.timeLeft += Math.abs(droneLocation.alt - warehouseLocations[0].alt);
+        droneLocation.timeLeft += droneFleet.getTimeLeft(warehouseLocations[0],  droneFleet.drones[0].order);
+        droneLocation.timeLeft += Math.abs(droneFleet.drones[0].order.alt - warehouseLocations[0].alt);
+      }
+      else if (droneFleet.drones[0].availability == "In Transit to Consumer") {
+        droneLocation.timeLeft = droneFleet.getTimeLeft(droneLocation, droneFleet.drones[0].order);
+        droneLocation.timeLeft += Math.abs(droneLocation.alt - droneFleet.drones[0].order.alt);
+      }
+
       //console.log("Drone Location : " + JSON.stringify(droneLocation));
       if (droneLocation.lat == orderInfo.lat
         && droneLocation.long == orderInfo.long
@@ -68,8 +80,6 @@ var appRouter = function (app, droneFleet, warehouseLocations, stationLocations)
           long: req.body.long,
           alt: req.body.alt,
           userId: req.body.userId,
-          productId: req.body.productId,
-          timeOfOrder: req.body.timeOfOrder,
           userOrderId: orderId,
       });
 

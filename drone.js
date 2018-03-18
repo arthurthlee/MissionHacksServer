@@ -10,10 +10,16 @@ class Drone {
         var drone1 = ({
             lat, long, alt,
             availability: "Available",
-            order: null
+            order: null,
+            timeLeft: null
         });
         this.drones.push(drone1);
         console.log("Drones: " + JSON.stringify(this.drones, null, 2));
+    }
+
+    getTimeLeft(currentLocation, destinationLocation) {
+        var pathLeft = this.getPath(currentLocation, destinationLocation);
+        return pathLeft.length;
     }
 
     getPath(sourceLocation, destinationLocation) 
@@ -26,7 +32,7 @@ class Drone {
         path.push(sourceLocation);
         while (Math.abs(currentLocation.lat - destinationLocation.lat) >= 0.0045045045
             && Math.abs(currentLocation.long - destinationLocation.long) >= 0.0045045045) {
-                console.log(currentLocation.lat + " " + currentLocation.long);
+                //console.log(currentLocation.lat + " " + currentLocation.long);
             if (currentLocation.lat > destinationLocation.lat) {
                 currentLocation.lat-=0.0045045045;
             }
@@ -39,6 +45,12 @@ class Drone {
             else if (currentLocation.long < destinationLocation.long) {
                 currentLocation.long+=0.0045045045;
             }
+            if (Math.abs(currentLocation.lat - destinationLocation.lat) < 0.0045045045){
+                currentLocation.lat = destinationLocation.lat;
+            }
+            if (Math.abs(currentLocation.long - destinationLocation.long) < 0.0045045045) {
+                currentLocation.long = destinationLocation.long;
+            }
             var curLocation = {
                 lat: currentLocation.lat,
                 long: currentLocation.long
@@ -46,7 +58,7 @@ class Drone {
             path.push(curLocation);
         }
         path.push(destinationLocation);
-        console.log("Path: " + JSON.stringify(path, null, 2));
+        //console.log("Path: " + JSON.stringify(path, null, 2));
         return path;
     }
 
@@ -71,6 +83,12 @@ class Drone {
                   else if (warehouseLocation.alt < drone.alt) {
                     drone.alt--;
                   }
+                  if (Math.abs(warehouseLocation.lat - drone.lat) < 0.0045045045){
+                    drone.lat = warehouseLocation.lat;
+                }
+                if (Math.abs(warehouseLocation.long - drone.long) < 0.0045045045) {
+                    drone.long = warehouseLocation.long;
+                }
                   if (Math.abs(warehouseLocation.lat - drone.lat) < 0.0045045045
                     && Math.abs(warehouseLocation.long - drone.long) < 0.0045045045
                     && warehouseLocation.alt == drone.alt) {
@@ -96,13 +114,20 @@ class Drone {
                   else if (drone.order.alt < drone.alt) {
                     drone.alt--;
                   }
+                  if (Math.abs(drone.order.lat - drone.lat) < 0.0045045045){
+                    drone.lat = drone.order.lat;
+                }
+                if (Math.abs(warehouseLocation.long - drone.long) < 0.0045045045) {
+                    drone.long = drone.order.long;
+                }
                   if (Math.abs(drone.order.lat - drone.lat) < 0.0045045045
                     && Math.abs(drone.order.long - drone.long) < 0.0045045045
                     && drone.order.alt == drone.alt) {
-                        drone.availability = "Returning to Station";
+                        drone.availability = "Available";//"Returning to Station";
                         drone.order = null;
                     }
             }
+            /*
             else if (drone.availability == "Returning to Station") {
                 if (stationLocation.lat > drone.lat) {
                     drone.lat+=0.0045045045;
@@ -127,7 +152,7 @@ class Drone {
                     && stationLocation.alt == drone.alt) {
                         drone.availability = "Available";
                     }
-            }
+            }*/
           });
     }
 
