@@ -50,7 +50,7 @@ var appRouter = function (app, droneFleet, warehouseLocations, stationLocations)
       if (!orderExists) {
         return;
       }
-
+      console.log(JSON.stringify(droneLocation));
       if (droneFleet.drones[0].availability == "In Transit to Warehouse" && droneLocation) {
         droneLocation.timeLeft = droneFleet.getTimeLeft(droneLocation, warehouseLocations[0]);
         droneLocation.timeLeft += Math.abs(droneLocation.alt - warehouseLocations[0].alt);
