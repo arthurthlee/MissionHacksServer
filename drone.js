@@ -91,7 +91,7 @@ class Drone {
                 }
                   if (Math.abs(warehouseLocation.lat - drone.lat) < 0.0045045045
                     && Math.abs(warehouseLocation.long - drone.long) < 0.0045045045
-            ){ //&& warehouseLocation.alt == drone.alt) {
+                    && Math.abs(warehouseLocation.alt - drone.alt) < 20) {
                         drone.availability = "In Transit to Consumer"
                     }
             }
@@ -122,7 +122,7 @@ class Drone {
                 }
                   if (Math.abs(drone.order.lat - drone.lat) < 0.0045045045
                     && Math.abs(drone.order.long - drone.long) < 0.0045045045
-            ) {//&& drone.order.alt == drone.alt) {
+                    && Math.abs(drone.order.alt - drone.alt) < 20) {
                         drone.availability = "Available";//"Returning to Station";
                         drone.order = null;
                     }
