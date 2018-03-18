@@ -18,7 +18,10 @@ class Drone {
 
     getPath(sourceLocation, destinationLocation) 
     {
-        var currentLocation = sourceLocation;
+        var currentLocation = {
+            lat: sourceLocation.lat,
+            long: sourceLocation.long
+        };
         var path = [];
         path.push(sourceLocation);
         while (Math.abs(currentLocation.lat - destinationLocation.lat) >= 0.0045045045
@@ -36,10 +39,14 @@ class Drone {
             else if (currentLocation.long < destinationLocation.long) {
                 currentLocation.long+=0.0045045045;
             }
-            path.push(currentLocation);
+            var curLocation = {
+                lat: currentLocation.lat,
+                long: currentLocation.long
+            };
+            path.push(curLocation);
         }
         path.push(destinationLocation);
-        console.log("Path: " + JSON.stringify(path));
+        console.log("Path: " + JSON.stringify(path, null, 2));
         return path;
     }
 
