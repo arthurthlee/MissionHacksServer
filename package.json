@@ -1,0 +1,24 @@
+{
+  "name": "missionhacksserver",
+  "version": "1.0.0",
+  "description": "Server",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "Test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ruhtraeel/MissionHacksServer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ruhtraeel/MissionHacksServer/issues"
+  },
+  "homepage": "https://github.com/ruhtraeel/MissionHacksServer#readme"
+}
