@@ -31,6 +31,7 @@ var appRouter = function (app, droneFleet, warehouseLocations, stationLocations)
     app.get("/packageLocation/:orderId", function (req, res) {  
       //console.log("Drone : " + JSON.stringify(droneFleet.drones, null, 2));
       //console.log("Request orderId: " + req.params.orderId);
+
       var orderInfo = userOrders.filter(function(order) {
         return Number(order.userOrderId) === Number(req.params.orderId);
       }) [0];
@@ -49,6 +50,18 @@ var appRouter = function (app, droneFleet, warehouseLocations, stationLocations)
       if (!orderExists) {
         return;
       }
+
+      // var WebSocketServer = require('ws').Server,
+      // wss = new WebSocketServer({port: 40510})
+      // wss.on('connection', function (ws) {
+      //     ws.on('message', function (message) {
+      //     console.log('received: %s', message)
+      //     })
+      //     setInterval(
+      //     () => ws.send(Object.assign( droneLocation, { status: 'transit' } )),
+      //     1000
+      //     )
+      // })
 
       //console.log("Drone Location : " + JSON.stringify(droneLocation));
       if (droneLocation.lat == orderInfo.lat

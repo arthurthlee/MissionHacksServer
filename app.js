@@ -28,10 +28,8 @@ var server = app.listen(3000, function () {
     droneFleet.create( stationLocations[ 0 ] );
     createWarehouses();
 
-    var t=setInterval(()=>{
-        
+    var t=setInterval(()=>{      
         droneFleet.move( warehouseLocations[ 0 ], stationLocations[ 0 ] ) // TODO
-        
     } ,1000);
 
 });
