@@ -13,7 +13,7 @@ var drones = [];
 var server = app.listen(3000, function () {
     console.log("app running on port.", server.address().port);
     createDrones();
-    var t=setInterval(statusUpdate,1000);
+    //var t=setInterval(statusUpdate,1000);
 
 });
 
