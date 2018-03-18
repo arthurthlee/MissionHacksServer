@@ -68,7 +68,7 @@ var appRouter = function (app, droneFleet, warehouseLocations, stationLocations)
         && droneLocation.alt == orderInfo.alt) {
       res.status(200).json({ status: 'arrived' });
         }
-        else {
+        else if (droneLocation) {
       res.status(200).json(Object.assign( droneLocation, { status: 'transit' } ) );
         }
     });
