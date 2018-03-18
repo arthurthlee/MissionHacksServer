@@ -1,3 +1,5 @@
+
+
 class Drone {
 
     constructor() {
@@ -18,16 +20,16 @@ class Drone {
         this.drones.forEach(function(drone) {
             if (drone.availability == "In Transit to Warehouse") {
                 if (warehouseLocation.lat > drone.lat) {
-                    drone.lat++;
+                    drone.lat+=0.0045045045;
                   }
                   else if (warehouseLocation.lat < drone.lat) {
-                    drone.lat--;
+                    drone.lat-=0.0045045045;
                   }
                   if (warehouseLocation.long > drone.long) {
-                    drone.long++;
+                    drone.long+=0.0045045045;
                   }
                   else if (warehouseLocation.long < drone.long) {
-                    drone.long--;
+                    drone.long-=0.0045045045;
                   }
                   if (warehouseLocation.alt > drone.alt) {
                     drone.alt++;
@@ -35,24 +37,24 @@ class Drone {
                   else if (warehouseLocation.alt < drone.alt) {
                     drone.alt--;
                   }
-                  if (warehouseLocation.lat == drone.lat
-                    && warehouseLocation.long == drone.long
+                  if (warehouseLocation.lat - drone.lat < 0.0045045045
+                    && warehouseLocation.long - drone.long < 0.0045045045
                     && warehouseLocation.alt == drone.alt) {
                         drone.availability = "In Transit to Consumer"
                     }
             }
             else if (drone.availability == "In Transit to Consumer") {
                 if (drone.order.lat > drone.lat) {
-                    drone.lat++;
+                    drone.lat+=0.0045045045;
                   }
                   else if (drone.order.lat < drone.lat) {
-                    drone.lat--;
+                    drone.lat-=0.0045045045;
                   }
                   if (drone.order.long > drone.long) {
-                    drone.long++;
+                    drone.long+=0.0045045045;
                   }
                   else if (drone.order.long < drone.long) {
-                    drone.long--;
+                    drone.long-=0.0045045045;
                   }
                   if (drone.order.alt > drone.alt) {
                     drone.alt++;
@@ -60,8 +62,8 @@ class Drone {
                   else if (drone.order.alt < drone.alt) {
                     drone.alt--;
                   }
-                  if (drone.order.lat == drone.lat
-                    && drone.order.long == drone.long
+                  if (drone.order.lat - drone.lat < 0.0045045045
+                    && drone.order.long - drone.long < 0.0045045045
                     && drone.order.alt == drone.long) {
                         drone.availability = "Returning to Station";
                         drone.order = null;
@@ -69,16 +71,16 @@ class Drone {
             }
             else if (drone.availability == "Returning to Station") {
                 if (stationLocation.lat > drone.lat) {
-                    drone.lat++;
+                    drone.lat+=0.0045045045;
                   }
                   else if (stationLocation.lat < drone.lat) {
-                    drone.lat--;
+                    drone.lat-=0.0045045045;
                   }
                   if (stationLocation.long > drone.long) {
-                    drone.long++;
+                    drone.long+=0.0045045045;
                   }
                   else if (stationLocation.long < drone.long) {
-                    drone.long--;
+                    drone.long-=0.0045045045;
                   }
                   if (stationLocation.alt > drone.alt) {
                     drone.alt++;
@@ -86,8 +88,8 @@ class Drone {
                   else if (stationLocation.alt < drone.alt) {
                     drone.alt--;
                   }
-                  if (stationLocation.lat == drone.lat
-                    && stationLocation.long == drone.long
+                  if (stationLocation.lat - drone.lat < 0.0045045045
+                    && stationLocation.long - drone.long < 0.0045045045
                     && stationLocation.alt == drone.alt) {
                         drone.availability = "Available";
                     }
