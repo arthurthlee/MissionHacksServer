@@ -117,7 +117,7 @@ class Drone {
                   if (Math.abs(drone.order.lat - drone.lat) < 0.0045045045){
                     drone.lat = drone.order.lat;
                 }
-                if (Math.abs(warehouseLocation.long - drone.long) < 0.0045045045) {
+                if (Math.abs(drone.order.long - drone.long) < 0.0045045045) {
                     drone.long = drone.order.long;
                 }
                   if (Math.abs(drone.order.lat - drone.lat) < 0.0045045045
