@@ -91,7 +91,7 @@ class Drone {
                   }
                   if (Math.abs(drone.order.lat - drone.lat) < 0.0045045045
                     && Math.abs(drone.order.long - drone.long) < 0.0045045045
-                    && drone.order.alt == drone.long) {
+                    && drone.order.alt == drone.alt) {
                         drone.availability = "Returning to Station";
                         drone.order = null;
                     }
