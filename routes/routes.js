@@ -1,9 +1,31 @@
 var userOrders = [];
 var currentOrderId = 0;
 
-var appRouter = function (app, droneFleet) {
+var appRouter = function (app, droneFleet, warehouseLocations, stationLocations) {
     app.get("/", function(req, res) {
       res.status(200).send("Welcome to our restful API");
+    });
+
+    app.get("/getPaths", function (req, res) {
+      var stationLocation = {
+        lat: stationLocations[0].lat,
+        long: stationLocations[0].long
+      };
+      var warehouseLocation = {
+        lat: warehouseLocations[0].lat,
+        long: warehouseLocations[0].long
+      };
+      var userLocation = {
+        lat: req.query.lat,
+        long: req.query.long
+      };
+      var stationToWarehousePath = droneFleet.getPath(stationLocation, warehouseLocation);
+      var warehouseToConsumerPath = droneFleet.getPath(warehouseLocation, userLocation);
+      var json = {
+        stationToWarehousePath,
+        warehouseToConsumerPath
+      };
+      res.status(200).json(json);
     });
 
     app.get("/packageLocation/:orderId", function (req, res) {  
@@ -25,13 +47,13 @@ var appRouter = function (app, droneFleet) {
       })[ 0 ];
 
       if (!orderExists) {
-        return
+        return;
       }
 
       //console.log("Drone Location : " + JSON.stringify(droneLocation));
       if (droneLocation.lat == orderInfo.lat
         && droneLocation.long == orderInfo.long
-        && droneLocation.alt == orderInfo.long) {
+        && droneLocation.alt == orderInfo.alt) {
       res.status(200).json("PACKAGE ARRIVED");
         }
         else {
@@ -55,8 +77,10 @@ var appRouter = function (app, droneFleet) {
        res.status(201).json(orderId);
       currentOrderId++;
       var availableDrone = droneFleet.findAvailable();
-      availableDrone.availability = "In Transit to Warehouse";
-      availableDrone.order = userOrder;
+      if (availableDrone != null) {
+        availableDrone.availability = "In Transit to Warehouse";
+        availableDrone.order = userOrder;
+      }
       //console.log("Drones after order" + JSON.stringify(droneFleet.drones, null, 2));
       //console.log("UserOrderLocations " + JSON.stringify(userOrders, null, 2));
        // Optimization logic to send out drone

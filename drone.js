@@ -16,6 +16,33 @@ class Drone {
         console.log("Drones: " + JSON.stringify(this.drones, null, 2));
     }
 
+    getPath(sourceLocation, destinationLocation) 
+    {
+        var currentLocation = sourceLocation;
+        var path = [];
+        path.push(sourceLocation);
+        while (Math.abs(currentLocation.lat - destinationLocation.lat) >= 0.0045045045
+            && Math.abs(currentLocation.long - destinationLocation.long) >= 0.0045045045) {
+                console.log(currentLocation.lat + " " + currentLocation.long);
+            if (currentLocation.lat > destinationLocation.lat) {
+                currentLocation.lat-=0.0045045045;
+            }
+            else if (currentLocation.lat < destinationLocation.lat) {
+                currentLocation.lat+=0.0045045045;
+            }
+            if (currentLocation.long > destinationLocation.long) {
+                currentLocation.long-=0.0045045045;
+            }
+            else if (currentLocation.long < destinationLocation.long) {
+                currentLocation.long+=0.0045045045;
+            }
+            path.push(currentLocation);
+        }
+        path.push(destinationLocation);
+        console.log("Path: " + JSON.stringify(path));
+        return path;
+    }
+
     move(warehouseLocation, stationLocation) {
         this.drones.forEach(function(drone) {
             if (drone.availability == "In Transit to Warehouse") {

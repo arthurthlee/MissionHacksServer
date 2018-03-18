@@ -20,13 +20,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const Drone = require( './drone' );
 const droneFleet = new Drone();
 
-routes(app, droneFleet);
+routes(app, droneFleet, warehouseLocations, stationLocations);
 
 var server = app.listen(3000, function () {
     console.log("app running on port.", server.address().port);
     createStations();
     droneFleet.create( stationLocations[ 0 ] );
-    createFactories();
+    createWarehouses();
 
     var t=setInterval(()=>{
         
@@ -42,7 +42,7 @@ function statusUpdate() {
     }).length);
 }
 
-function createFactories() {
+function createWarehouses() {
     var warehouseLocation = {
         lat: randomIntFromInterval(latitudeLowerLimit, latitudeUpperLimit),
         long: randomIntFromInterval(longitudeLowerLimit, longitudeUpperLimit),
