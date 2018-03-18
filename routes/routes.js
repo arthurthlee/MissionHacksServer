@@ -44,6 +44,8 @@ var appRouter = function (app, droneFleet, warehouseLocations, stationLocations)
           orderExists = false;
           return;
         }
+        console.log("Order ID req: " + req.params.orderId);
+        console.log("Stored userOrderId: " + drone.order.userOrderId);
         return Number( drone.order.userOrderId ) === Number( req.params.orderId );
       })[ 0 ];
 
